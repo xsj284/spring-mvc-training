@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/index.css">
+    <script src="../../js/bootstrap.bundle.js"></script>
+    <script src="../../js/jquery.js"></script>
+
+    <script>
+        function loginSubmit() {
+            const username = $("#username").val()
+            const password = $("#password").val()
+            const tempPassword = $("#tempPassword").val()
+
+            if (username === '' || username === null ||
+                password === '' || password === null ||
+                tempPassword === '' || tempPassword === null
+            ) {
+                alert('你在干什么,某一项或多项为空')
+                return;
+            }
+            if (password.length < 6) {
+                alert('密码都没6位,不怕盗号啊')
+                return;
+            }
+
+            if (tempPassword !== password) {
+                alert('两次密码不一样哦!')
+                return;
+            }
+
+            const loginInfo = {
+                username: username,
+                password: password
+            }
+            $.ajax({
+                url: '/registerVerify',
+                type: 'post',
+                data: JSON.stringify(loginInfo),
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'text',
+                success: function (registerCode) {
+                    let msg;
+                    switch (registerCode) {
+                        case '0':
+                            msg = '此用户已存在!'
+                            break;
+                        case '1':
+                            msg = '注册成功!'
+                            window.open('login.html', '_self')
+                            break;
+                        case '-1':
+                            msg = '服务器被外星人光临了! 请重试'
+                            break;
+                        default:
+                            if (msg === undefined) {
+                                msg = '确认您网络良好再重试,也有可能服务器被kill了'
+                            }
+                    }
+                    alert(msg)
+                },
+                error: () => {
+                    let msg = '确认您网络良好再重试,也有可能服务器被kill了'
+                    alert(msg)
+                }
+            })
+        }
+    </script>
+
+    <style>
+        .text-white {
+            color: white;
+        }
+
+        .div-main {
+            width: 33%;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            transform: translateY(100%);
+        }
+    </style>
+</head>
+
+<body class="text-center">
+<div class="container div-main bg-main br-12">
+    <h1 class="text-white">注 册</h1>
+    <label>
+        <input class="input-beau input-group-text" type="text" name="username" id="username" placeholder="用户名">
+    </label><br>
+    <label>
+        <input class="input-beau input-group-text" type="password" name="password" id="password" placeholder="密码">
+    </label><br>
+    <label>
+        <input class="input-beau input-group-text" type="password" name="tempPassword" id="tempPassword"
+               placeholder="密码">
+    </label><br>
+    <label>
+        <input class="btn-login" type="button" value="注 册" onclick="loginSubmit()">
+    </label>
+</div>
+
+</body>
+
+</html>
