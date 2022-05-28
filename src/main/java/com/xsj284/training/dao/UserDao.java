@@ -2,10 +2,7 @@ package com.xsj284.training.dao;
 
 import com.xsj284.training.entity.User;
 import com.xsj284.training.entity.UserPwd;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,6 +35,8 @@ public interface UserDao {
     @Select("select " +
             "* " +
             "from tb_user where id=#{id};")
+    @Results({@Result(column = "profile_photo", property = "profilePhoto"),
+            @Result(column = "personal_signature", property = "personalSignature")})
     User selectUserById(int id);
 
     @Select("select exists(select * from tb_user where username=#{username});")

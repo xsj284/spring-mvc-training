@@ -4,6 +4,7 @@ import com.xsj284.training.dao.UserDao;
 import com.xsj284.training.entity.User;
 import com.xsj284.training.entity.UserPwd;
 import com.xsj284.training.service.UserService;
+import com.xsj284.training.service.model.LoginModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,18 +24,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int userLogin(String username, String password) {
+    public LoginModel userLogin(String username, String password) {
+        LoginModel loginModel = new LoginModel();
+        int userId = userDao.selectIdByName(username);
+        User user = userDao.selectUserById(userId);
+        int result;
         // unregistered
         if (userDao.isExistsByName(username) == 0) {
-            return 0;
+            result = 0;
         }
         // login successful
-        String tempPassword = userDao.selectUserPwd(userDao.selectIdByName(username));
-        if (password.equals(tempPassword)) {
-            return 1;
+        else if (password.equals(userDao.selectUserPwd(userId))) {
+            result = 1;
         }
         // login failed
-        return -1;
+        else {
+            result = -1;
+        }
+        loginModel.setLoginCode(result);
+        loginModel.setUsername(user.getUsername());
+        loginModel.setProfilePhoto(user.getProfilePhoto());
+        return loginModel;
     }
 
     @Override
@@ -65,6 +75,16 @@ public class UserServiceImpl implements UserService {
         }
 
         //another
+        return -1;
+    }
+
+    public int userInfoUpdate(User user) {
+        int result = userDao.updateUser(user);
+        if (result == 0) {
+            return 0;
+        } else if (result > 0) {
+            return 1;
+        }
         return -1;
     }
 }

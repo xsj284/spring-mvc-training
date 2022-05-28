@@ -1,6 +1,7 @@
 package com.xsj284.training.entity;
 
 
+import com.xsj284.training.utils.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,9 +18,9 @@ import java.sql.Date;
 public class User {
     private int id;
     private String username;
-    private String sex;
-    private Date birthday;
-    private String address;
-    private String profilePhoto;
-    private String personalSignature;
+    private String sex = "未知";
+    private Date birthday = new Date(DateUtil.dateStringToLong("2000-01-01"));
+    private String address = "";
+    private String profilePhoto = "img/userProfile/default.png";
+    private String personalSignature = "";
 }

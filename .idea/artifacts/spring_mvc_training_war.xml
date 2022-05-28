@@ -1,14 +1,14 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="spring-mvc-training:war">
+  <artifact type="war" name="spring_mvc_training:war">
     <output-path>$PROJECT_DIR$/target</output-path>
     <properties id="maven-jee-properties">
       <options>
-        <module>spring-mvc-training</module>
+        <module>spring_mvc_training</module>
         <packaging>war</packaging>
       </options>
     </properties>
     <root id="archive" name="spring_mvc_training-1.0-BETA.war">
-      <element id="artifact" artifact-name="spring-mvc-training:war exploded" />
+      <element id="artifact" artifact-name="spring_mvc_training:war exploded" />
     </root>
   </artifact>
 </component>

@@ -39,3 +39,8 @@
     padding-left: 2px;
     padding-right: 2px;
 }
+
+.profile-img {
+    height: 24px;
+    border-radius: 100%;
+}

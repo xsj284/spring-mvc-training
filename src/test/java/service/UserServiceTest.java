@@ -2,6 +2,7 @@ package service;
 
 import com.xsj284.training.config.SpringConfig;
 import com.xsj284.training.service.UserService;
+import com.xsj284.training.service.model.LoginModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class UserServiceTest {
 
     @Test
     public void LoginTest() {
-        int loginCode = userService.userLogin("xsj284", "123456");
+        LoginModel loginCode = userService.userLogin("xsj284", "123456");
         System.out.println(loginCode);
     }
 }

@@ -1,17 +1,17 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="spring-mvc-training:war exploded">
+  <artifact type="exploded-war" name="spring_mvc_training:war exploded">
     <output-path>$PROJECT_DIR$/target/spring_mvc_training-1.0-BETA</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
-        <module>spring-mvc-training</module>
+        <module>spring_mvc_training</module>
         <packaging>war</packaging>
       </options>
     </properties>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="spring-mvc-training" />
+          <element id="module-output" name="spring_mvc_training" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.springframework:spring-test:5.3.20" />
@@ -44,7 +44,7 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/target/spring_mvc_training-1.0-BETA/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="spring-mvc-training/web/Web" />
+      <element id="javaee-facet-resources" facet="spring_mvc_training/web/Web" />
     </root>
   </artifact>
 </component>

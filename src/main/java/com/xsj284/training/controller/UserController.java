@@ -2,13 +2,12 @@ package com.xsj284.training.controller;
 
 import com.xsj284.training.controller.view.UserLoginInfo;
 import com.xsj284.training.service.UserService;
+import com.xsj284.training.service.model.LoginModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author xsj284
@@ -27,42 +26,32 @@ public class UserController {
     @RequestMapping(value = "loginVerify", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public int loginVerify(HttpServletRequest request, @RequestBody UserLoginInfo userLoginInfo) {
-        int loginCode = userService.userLogin(userLoginInfo.getUsername(), userLoginInfo.getPassword());
-        request.getSession().setAttribute("loginCode", loginCode);
-        request.getSession().setAttribute("username", userLoginInfo.getUsername());
-        return loginCode;
+        LoginModel loginModel = userService.userLogin(userLoginInfo.getUsername(), userLoginInfo.getPassword());
+        request.getSession().setAttribute("loginModel", loginModel);
+        return loginModel.getLoginCode();
     }
 
     /*登出*/
     @RequestMapping(value = "loginOut")
     @ResponseBody
-    public int loginOut(HttpServletRequest request) {
-        if ((int) request.getSession().getAttribute("loginCode") == 1) {
-            request.getSession().setAttribute("loginCode", 0);
-            request.getSession().setAttribute("username", null);
-            return 1;
+    public void loginOut(HttpServletRequest request) {
+        LoginModel loginModel = (LoginModel) request.getSession().getAttribute("loginModel");
+        if (loginModel.getLoginCode() == 1) {
+            request.getSession().setAttribute("loginModel", null);
         }
-        return 0;
     }
 
     /*登录信息获取*/
     @GetMapping(value = "isLoginSuccess")
     @ResponseBody
-    public Map<String, Object> isLoginSuccess(HttpServletRequest request) {
-        Map<String, Object> map = new HashMap<>();
-        if (request.getSession() != null) {
-            map.put("loginCode", request.getSession().getAttribute("loginCode"));
-            map.put("username", request.getSession().getAttribute("username"));
-        }
-        return map;
+    public LoginModel isLoginSuccess(HttpServletRequest request) {
+        return (LoginModel) request.getSession().getAttribute("loginModel");
     }
 
     /*注册验证*/
     @PostMapping(value = "registerVerify")
     @ResponseBody
     public int registerVerify(HttpServletRequest request, @RequestBody UserLoginInfo userLoginInfo) {
-        int registerCode = userService.userRegister(userLoginInfo.getUsername(), userLoginInfo.getPassword());
-        request.getSession().setAttribute("username", userLoginInfo.getUsername());
-        return registerCode;
+        return userService.userRegister(userLoginInfo.getUsername(), userLoginInfo.getPassword());
     }
 }

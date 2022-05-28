@@ -15,12 +15,11 @@
 
     <link rel="stylesheet" href="css/index.css">
 
-    <script src="js/index.js"></script>
-
     <script>
         let pageData = {
             loginCode: null,
-            username: null
+            username: null,
+            profilePhoto: "img/userProfile/default.png"
         };
         $(document).ready(() => {
             $.ajax({
@@ -29,18 +28,18 @@
                 type: 'get',
                 async: false,
                 success: (data) => {
-                    pageData = data
-
+                    pageData = data;
                 }
             })
             const noLogin = $("#noLogin")
             const loginSuccess = $("#loginSuccess")
-            const loginSuccessText = $("#loginSuccess span")
             if (pageData.loginCode === 1) {
                 noLogin.css("display", "none")
                 loginSuccess.css("display", "block")
-                loginSuccessText.html(pageData.username + ",欢迎回来! | " +
-                    "<span class='el-hover' onclick=\"loginOut()\">退出登录</span>")
+                loginSuccess.html("<img class='profile-img' src=\"" + pageData.profilePhoto + "\" alt=\"用户资料\">" +
+                    "&nbsp;<span>" + pageData.username + ",欢迎回来! | </span>" +
+                    "<span class='el-hover' onclick=\"loginOut()\">退出登录</span>"
+                )
             }
         })
 
@@ -64,7 +63,7 @@
 
 <body>
 <div class="container-fluid text-white bg-main">
-    <h1 class="text-center pt-5 p-md-5">我的第一个 Bootstrap 页面</h1>
+    <h1 class="text-center pt-5 p-md-5">我的个人页面</h1>
     <div class="row index-header">
         <div class="col-4">
             <div class="row">
@@ -80,7 +79,6 @@
                 <span class="btn-register el-hover" onclick="gotoPage('pages/account/register.html')">Register</span>
             </div>
             <div id="loginSuccess" style="display: none">
-                <span></span>
             </div>
         </div>
     </div>
