@@ -5,8 +5,11 @@ import com.xsj284.training.entity.User;
 import com.xsj284.training.entity.UserPwd;
 import com.xsj284.training.service.UserService;
 import com.xsj284.training.service.model.LoginModel;
+import com.xsj284.training.service.model.UserChangeModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author xsj284
@@ -86,5 +89,48 @@ public class UserServiceImpl implements UserService {
             return 1;
         }
         return -1;
+    }
+
+    public int userInfoUpdateById(User user) {
+        int result = userDao.updateUserById(user);
+        if (result == 0) {
+            return 0;
+        } else if (result > 0) {
+            return 1;
+        }
+        return -1;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userDao.selectAll();
+    }
+
+    @Override
+    public int getIdByName(String username) {
+        return userDao.selectIdByName(username);
+    }
+
+    @Override
+    public int deleteUser(int id) {
+        return userDao.deleteUser(id);
+    }
+
+    @Override
+    public User getUserByName(String username) {
+        return userDao.selectUserById(userDao.selectIdByName(username));
+    }
+
+    @Override
+    public int changePassword(UserChangeModel info) {
+        int userId = userDao.selectIdByName(info.getUsername());
+        if (userDao.selectUserPwd(userId)
+                .equals(info.getPassword())) {
+            UserPwd userPwd = new UserPwd();
+            userPwd.setId(userId);
+            userPwd.setPwd(info.getNewPassword());
+            return userDao.updateUserPwd(userPwd);
+        }
+        return 0;
     }
 }

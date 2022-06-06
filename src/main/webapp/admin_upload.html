@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <script src="js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+    <script src="js/jquery.js"></script>
+
+    <link rel="stylesheet" href="css/index.css">
+
+    <script>
+        $(document).ready(() => {
+            $.ajax({
+                url: 'isLoginSuccess',
+                dataType: 'json',
+                type: 'get',
+                async: false,
+                success: (data) => {
+                    pageData = data;
+                }
+            })
+            const noLogin = $("#noLogin")
+            const loginSuccess = $("#loginSuccess")
+            if (pageData.loginCode === 1) {
+                noLogin.css("display", "none")
+                loginSuccess.css("display", "block")
+                loginSuccess.html("<img class='profile-img' src=\"" + pageData.profilePhoto +
+                    "\" alt=\"用户资料\" onclick='dianwo()'>" +
+                    "&nbsp;<span>" + pageData.username + ",欢迎回来! | </span>" +
+                    "<span class='el-hover' onclick=\"loginOut()\">退出登录</span>"
+                )
+            }
+
+            $.ajax({
+                url: 'getArticleInfo',
+                type: 'post',
+                dataType: 'text',
+                async: false,
+                success: (data) => {
+                    if (data == null) {
+                        alert('数据库出问题了')
+                    }
+                    data = eval("(" + data + ")");
+                    for (let i = 0; i < data.length; i++) {
+                        const node = document.createElement('div')
+                        const text = ' -' +
+                            data[i].id + '- 标题' +
+                            data[i].title + '    作者:' +
+                            data[i].author + ' <br>文件路径:' +
+                            data[i].content + '    创建时间:' +
+                            datetimeFormat(data[i].createdTime)
+
+                        node.innerHTML = '<h3>' + text + '</h3><br><div class="btn-group"></div>' +
+                            '<button class="btn btn-danger" onclick="delArticle(' + data[i].id + ')">删除</button>'
+                        /*+ '<button class="btn btn-primary" onclick="dianwo(' + data[i].id + ')">修改</button></div>'*/
+                        node.id = 'user' + i;
+                        node.className = 'row'
+                        document.getElementById('articleInfo').appendChild(node)
+                    }
+                }
+            })
+        })
+
+        function delArticle(id) {
+            $.ajax({
+                url: 'deleteArticle',
+                type: 'post',
+                contentType: 'application/form-data; charset=UTF-8',
+                data: JSON.stringify({id: id}),
+                async: false,
+                success: (data) => {
+                    if (data > 0) {
+                        alert('删除成功!')
+                    } else {
+                        alert('删除失败!')
+                    }
+                    window.location.reload();
+                }
+            })
+        }
+
+        function loginOut() {
+            $.ajax({
+                url: 'loginOut',
+                type: 'get',
+                async: false,
+                success: () => {
+                    gotoPage('index.html')
+                }
+            })
+        }
+
+        function gotoPage(url) {
+            window.open(url, '_self')
+        }
+
+        function datetimeFormat(longTypeDate) {
+            let datetimeType = "";
+            const date = new Date();
+            date.setTime(longTypeDate);
+            datetimeType += date.getFullYear();   //年
+            datetimeType += "-" + getMonth(date); //月
+            datetimeType += "-" + getDay(date);   //日
+            datetimeType += "&nbsp;&nbsp;" + getHours(date);   //时
+            datetimeType += ":" + getMinutes(date);      //分
+            datetimeType += ":" + getSeconds(date);      //分
+            return datetimeType;
+        }
+
+        //返回 01-12 的月份值
+        function getMonth(date) {
+            let month = "";
+            month = date.getMonth() + 1; //getMonth()得到的月份是0-11
+            if (month < 10) {
+                month = "0" + month;
+            }
+            return month;
+        }
+
+        //返回01-30的日期
+        function getDay(date) {
+            let day = "";
+            day = date.getDate();
+            if (day < 10) {
+                day = "0" + day;
+            }
+            return day;
+        }
+
+        //返回小时
+        function getHours(date) {
+            let hours = "";
+            hours = date.getHours();
+            if (hours < 10) {
+                hours = "0" + hours;
+            }
+            return hours;
+        }
+
+        //返回分
+        function getMinutes(date) {
+            let minute = "";
+            minute = date.getMinutes();
+            if (minute < 10) {
+                minute = "0" + minute;
+            }
+            return minute;
+        }
+
+        //返回秒
+        function getSeconds(date) {
+            let second = "";
+            second = date.getSeconds();
+            if (second < 10) {
+                second = "0" + second;
+            }
+            return second;
+        }
+    </script>
+</head>
+<body style="background-color: #d7d8da">
+<div class="container-fluid text-white">
+    <div class="text-center pt-5 p-md-5 bg-primary"><h1>文章管理界面</h1></div>
+    <div class="row index-header">
+        <div class="col-5">
+            <div class="row">
+                <div class="col"><span class="el-hover" onclick="gotoPage('/')">首页</span></div>
+                <div class="col"><span class="el-hover" onclick="gotoPage('/admin.html')">管理员页面</span></div>
+                <div class="col"><span class="el-hover" onclick="gotoPage('/admin_upload.html')">文章管理</span></div>
+            </div>
+        </div>
+        <div class="col text-align-right">
+            <div id="noLogin">
+                <span class="btn-login el-hover" onclick="gotoPage('pages/account/login.html')">Login</span>
+                <span> | </span>
+                <span class="btn-register el-hover" onclick="gotoPage('pages/account/register.html')">Register</span>
+            </div>
+            <div id="loginSuccess" style="display: none">
+            </div>
+        </div>
+    </div>
+    <div style="margin: 8px 200px 0 200px; padding: 0;background:#00c8ff;">
+        <div class="row bg-white text-black" id="articleInfo">
+            <div class="row"><p></p></div>
+            <div class="row"><p></p></div>
+            <strong style="background:rgb(0,200,255); color: white">文章管理</strong>
+        </div>
+    </div>
+</div>
+</body>
+</html>

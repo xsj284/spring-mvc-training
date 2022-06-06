@@ -20,14 +20,22 @@ public interface UserDao {
     int insertUser(User user);
 
     @Update("update tb_user set " +
-            "username = #{username}, " +
+            "sex = #{sex}, " +
+            "birthday = #{birthday}, " +
+            "address = #{address}, " +
+            "profile_photo = #{profilePhoto}, " +
+            "personal_signature = #{personalSignature} " +
+            "where username=#{username};")
+    int updateUser(User user);
+
+    @Update("update tb_user set " +
             "sex = #{sex}, " +
             "birthday = #{birthday}, " +
             "address = #{address}, " +
             "profile_photo = #{profilePhoto}, " +
             "personal_signature = #{personalSignature} " +
             "where id=#{id};")
-    int updateUser(User user);
+    int updateUserById(User user);
 
     @Delete("delete from tb_user where id=#{id};")
     int deleteUser(int id);
@@ -46,6 +54,8 @@ public interface UserDao {
     int selectIdByName(String username);
 
     @Select("select * from tb_user;")
+    @Results({@Result(column = "profile_photo", property = "profilePhoto"),
+            @Result(column = "personal_signature", property = "personalSignature")})
     List<User> selectAll();
 
     @Insert("insert into tb_user_pwd (id, pwd) values (#{id}, #{pwd});")

@@ -5,27 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1571bcae-739f-4bac-8bef-cdad1c0dadff" name="变更" comment="gitee to github">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/service/model/LoginModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/img/userProfile/default.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/img/userProfile/xsj284.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/spring_mvc_training_war.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/spring_mvc_training_war.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/config/UploadConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/controller/ArticleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/controller/PageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/controller/view/UserInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/dao/ArticleDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/entity/Article.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/service/ArticleService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/service/impl/ArticleServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/service/model/UserChangeModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin_upload.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/pages/account/change.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/upload.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/spring_mvc_training_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/spring_mvc_training_war_exploded.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/spring-mvc-training.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/spring-mvc-training.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring_mvc_training.iml" beforeDir="false" afterPath="$PROJECT_DIR$/spring_mvc_training.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xsj284/training/config/SpringConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/config/SpringConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xsj284/training/config/SpringMvcSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/config/SpringMvcSupport.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xsj284/training/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xsj284/training/controller/view/UserLoginInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/controller/view/UserLoginInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xsj284/training/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/dao/UserDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xsj284/training/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/entity/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xsj284/training/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xsj284/training/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xsj284/training/utils/DateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xsj284/training/utils/DateUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/service/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +45,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="UML Class" />
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
         <option value="Class" />
       </list>
     </option>
@@ -63,15 +75,16 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;DefaultPlantUmlFileTemplate&quot;: &quot;UML Class&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/spring-mvc-training/src/main/webapp/content&quot;,
     &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.34827587&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.ccnode.codegenerator.R.d&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;77ae732bfa689b7c81e6d2ac4c02f48b&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -82,6 +95,10 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\spring-mvc-training\src\main\webapp\content" />
+      <recent name="E:\spring-mvc-training\src\main\webapp" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\spring-mvc-training\src\main\webapp\img\userProfile" />
       <recent name="E:\spring-mvc-training" />
@@ -129,6 +146,17 @@
       <workItem from="1653651108644" duration="1603000" />
       <workItem from="1653694550698" duration="10083000" />
       <workItem from="1653717510714" duration="5308000" />
+      <workItem from="1653727668573" duration="715000" />
+      <workItem from="1653732073475" duration="1641000" />
+      <workItem from="1653784174467" duration="12682000" />
+      <workItem from="1653804456249" duration="10271000" />
+      <workItem from="1653815808297" duration="12648000" />
+      <workItem from="1653828623596" duration="31245000" />
+      <workItem from="1653890585235" duration="2969000" />
+      <workItem from="1654053287365" duration="9000" />
+      <workItem from="1654392987962" duration="97000" />
+      <workItem from="1654393266715" duration="59000" />
+      <workItem from="1654536841273" duration="9363000" />
     </task>
     <task id="LOCAL-00001" summary="gitee to github">
       <created>1653633369828</created>
@@ -157,5 +185,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="gitee to github" />
     <option name="LAST_COMMIT_MESSAGE" value="gitee to github" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

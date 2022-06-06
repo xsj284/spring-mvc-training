@@ -8,6 +8,10 @@
     text-align: right;
 }
 
+.text-align-left {
+    text-align: left;
+}
+
 .bg-main {
     background-color: rgba(0, 107, 255, 0.5);
 }
@@ -32,6 +36,7 @@
 .index-header {
     background-color: var(--bg-header);
     padding: 5px 10%;
+    transform: translateY(100%);
 }
 
 .btn-login,

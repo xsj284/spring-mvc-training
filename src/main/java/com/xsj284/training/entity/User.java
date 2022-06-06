@@ -23,4 +23,6 @@ public class User {
     private String address = "";
     private String profilePhoto = "img/userProfile/default.png";
     private String personalSignature = "";
+
+    private int admin = 0;
 }

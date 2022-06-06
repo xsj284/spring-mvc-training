@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>网上博客系统</title>
+    <title>Admin page</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
     <script src="js/bootstrap.bundle.js"></script>
@@ -71,12 +68,11 @@
 
     <script>
         let pageData = {
-            loginCode: null,
+            loginCode: 0,
             username: null,
             profilePhoto: "img/userProfile/default.png",
         };
-        let loginInfo = {}
-        let articles = [];
+        let loginInfo;
         $(document).ready(() => {
             $.ajax({
                 url: 'isLoginSuccess',
@@ -84,25 +80,14 @@
                 type: 'get',
                 async: false,
                 success: (data) => {
+                    if (data == null || data === '') {
+                        gotoPage('index.html')
+                    } else if (data.loginCode !== 1) {
+                        gotoPage('index.html')
+                    }
                     pageData = data;
                 }
             })
-
-            $.ajax({
-                url: '/getLoginUser',
-                type: 'post',
-                contentType: 'application/json;charset=UTF-8',
-                dataType: 'json',
-                async: false,
-                success: function (data) {
-                    loginInfo = data
-                    $('#sex').val(data.sex)
-                    $('#birthday').val(data.birthday)
-                    $('#address').val(data.address)
-                    $('#personalSignature').val(data.personalSignature)
-                }
-            })
-
             const noLogin = $("#noLogin")
             const loginSuccess = $("#loginSuccess")
             if (pageData.loginCode === 1) {
@@ -113,11 +98,24 @@
                     "&nbsp;<span>" + pageData.username + ",欢迎回来! | </span>" +
                     "<span class='el-hover' onclick=\"loginOut()\">退出登录</span>"
                 )
+            } else {
+                gotoPage('index.html')
             }
 
             $.ajax({
+                url: '/getLoginUser',
+                type: 'post',
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    loginInfo = data
+                }
+            })
+
+            $.ajax({
                 url: 'getArticleInfo',
-                type: 'get',
+                type: 'post',
                 dataType: 'text',
                 async: false,
                 success: (data) => {
@@ -125,40 +123,40 @@
                         alert('数据库出问题了')
                     }
                     data = eval("(" + data + ")");
-                    articles = data
-                    for (let i = data.length - 1; i >= 0; i--) {
+                    for (let i = 0; i < data.length; i++) {
+                        if (data[i].author !== pageData.username) continue;
                         const node = document.createElement('div')
                         const text = ' -' +
-                            data[i].id + '- <h3>' +
-                            data[i].title + '</h3>作者:' +
-                            data[i].author + '    创建时间:' +
+                            data[i].id + '- 标题' +
+                            data[i].title + '    作者:' +
+                            data[i].author + ' <br>文件路径:' +
+                            data[i].content + '    创建时间:' +
                             datetimeFormat(data[i].createdTime)
 
-                        node.innerHTML = text + '<br><div class="btn-group"></div>' +
-                            '<button class="btn btn-primary" onclick="seeArticle(' + i + ')">查看</button>'
-                        /*+ '<button class="btn btn-primary" onclick="dianwo(' + data[i].id + ')">修改</button></div>'*/
+                        node.innerHTML = '<h3>' + text + '</h3><br><div class="btn-group"></div>' +
+                            '<button class="btn btn-danger" onclick="delArticle(' + data[i].id + ')">删除</button>'
                         node.id = 'user' + i;
                         node.className = 'row'
-                        document.getElementById('articleInfo').appendChild(node)
+                        document.getElementById('userInfo').appendChild(node)
                     }
                 }
             })
         })
 
-        function seeArticle(i) {
-            const title = document.getElementById('articleTitle')
-            title.innerHTML = articles[i].title
+        function delArticle(id) {
             $.ajax({
-                url: 'getArticleContent',
+                url: 'deleteArticle',
                 type: 'post',
-                contentType: 'application/json',
-                data: JSON.stringify({id: articles[i].id}),
-                dataType: 'text',
-                sync: false,
+                contentType: 'application/form-data; charset=UTF-8',
+                data: JSON.stringify({id: id}),
+                async: false,
                 success: (data) => {
-                    const el = document.getElementById('articleContent')
-                    el.innerHTML = data
-                    dianwo2()
+                    if (data > 0) {
+                        alert('删除成功!')
+                    } else {
+                        alert('删除失败!')
+                    }
+                    window.location.reload();
                 }
             })
         }
@@ -176,30 +174,6 @@
 
         function gotoPage(url) {
             window.open(url, '_self')
-        }
-
-        function updateUserInfo() {
-            let loginInfo = {
-                sex: $('#sex').val(),
-                birthday: $('#birthday').val(),
-                address: $('#address').val(),
-                profilePhoto: $('#profilePhoto').val(),
-                personalSignature: $('#personalSignature').val()
-            }
-            $.ajax({
-                url: 'userUpdateInfo',
-                type: 'post',
-                contentType: 'application/json',
-                data: JSON.stringify(loginInfo),
-                success: (code) => {
-                    if (code === 1) {
-                        alert('修改成功')
-                    } else {
-                        alert('修改失败')
-                    }
-                    gotoPage('/')
-                }
-            })
         }
 
         function datetimeFormat(longTypeDate) {
@@ -266,14 +240,13 @@
         }
     </script>
 </head>
-
-<body>
-<div class="container-fluid text-white bg-main">
-    <h1 class="text-center pt-5 p-md-5">网上博客系统</h1>
+<body style="background-color: #d7d8da">
+<div class="container-fluid text-white">
+    <div class="text-center pt-5 p-md-5 bg-primary"><h1>用户文章管理界面</h1></div>
     <div class="row index-header">
         <div class="col-5">
             <div class="row">
-                <div class="col"><span class="el-hover" onclick="gotoPage('/index')">首页</span></div>
+                <div class="col"><span class="el-hover" onclick="gotoPage('/')">首页</span></div>
                 <div class="col"><span class="el-hover" onclick="gotoPage('/admin.html')">管理员页面</span></div>
                 <div class="col"><span class="el-hover" onclick="gotoPage('/upload.html')">用户文章管理</span></div>
             </div>
@@ -288,41 +261,36 @@
             </div>
         </div>
     </div>
-
     <div style="margin: 8px 200px 0 200px; padding: 0;background:#00c8ff;">
-        <div class="row bg-white text-black text-center" id="articleInfo">
-            <div class="row"><p></p></div>
-            <strong style="background:rgb(0,200,255); color: white; padding-top: 8px">最新文章</strong>
+        <div class="row bg-white text-black" id="userInfo">
+            <strong style="background:rgb(0,200,255); color: white">文章管理</strong>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button class="btn btn-primary" onclick="dianwo()">添加文章</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="zhezhao" id='zhezhao'>
-    <div class="tankuang text-center">
+    <div class="container tankuang text-center">
         <div id="zhezhao-main" class="text-center">
-            <h3>个人资料</h3>
+            <h3>文章添加</h3>
             <div class="header-right" onclick="hidder()">x</div>
         </div>
-        <p id="info-username"></p>
-        <div>
+        <div class="form-group">
             <label>
-                性别:
-                <select id="sex" name="sex">
-                    <option value="未知">未知</option>
-                    <option value="男">男</option>
-                    <option value="女">女</option>
-                </select>
-            </label><br>
-            <label for="birthday">生日:</label><input name="birthday" type="date" id="birthday"
-                                                    value="2000-01-01"
-                                                    class="input-ziliao"><br>
-            <label for="address">地址:</label><input name="address" type="text" id="address"
-                                                   class="input-ziliao"><br>
-            <label for="personalSignature">个性签名</label><input name="personalSignature" type="text"
-                                                              id="personalSignature"><br>
-            <button style="margin-top: 200px" onclick="updateUserInfo()">提交</button>
-            <a href="/pages/account/change.html">更改密码</a>
+                标题:<input type="text" class="form-control" id="title">
+            </label>
         </div>
+        <div class="form-group">
+            <label for="articleFile" class="col-sm-2 control-label">上传文件(txt):</label>
+            <div class="col-sm-10">
+                <input type="file" accept=".txt" id="articleFile">
+            </div>
+        </div>
+        <button class="submit">提交</button>
     </div>
 </div>
 <script>
@@ -335,31 +303,40 @@
     function hidder() {
         document.getElementById('zhezhao').style.display = "none";
     }
-</script>
 
+    $('.submit').click(function () {
+        var title = $.trim($('#title').val());
+        var articleFile = $('#articleFile')[0].files[0];
 
-<div class="zhezhao" id='zhezhao2'>
-    <div class="tankuang text-center">
-        <div class="text-center zhezhao-main">
-            <h3 id="articleTitle"></h3>
-            <div class="header-right" onclick="hidder2()">x</div>
-            <div id="articleContent" class="text-align-left"
-                 style="position:absolute;left: 12%;height: 460px;overflow: auto"></div>
-        </div>
-    </div>
-</div>
+        var formData = new FormData();
 
-<script>
-    document.getElementById('zhezhao2').style.display = "none";
+        formData.append("crowd_file", articleFile);
+        formData.append("title", title);
+        formData.append("author", pageData.username)
 
-    function dianwo2() {
-        document.getElementById('zhezhao2').style.display = "";
-    }
+        $.ajax({
+            url: '/addArticleInfo',
+            dataType: 'text',
+            type: 'post',
+            async: false,
+            data: formData,
+            processData: false, // 使数据不做处理
+            contentType: false, // 不要设置Content-Type请求头
+            success: function (data) {
+                console.log(data);
+                if (data === '1') {
+                    alert('上传成功！');
+                } else {
+                    alert('上传失败！')
+                }
+                window.location.reload()
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
 
-    function hidder2() {
-        document.getElementById('zhezhao2').style.display = "none";
-    }
+    })
 </script>
 </body>
-
 </html>

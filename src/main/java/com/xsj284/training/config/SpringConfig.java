@@ -16,6 +16,6 @@ import org.springframework.context.annotation.PropertySource;
         "com.xsj284.training.service",
         "com.xsj284.training.config"
 })
-@Import({JdbcConfig.class, MyBatisConfig.class})
+@Import({JdbcConfig.class, MyBatisConfig.class, UploadConfig.class})
 public class SpringConfig {
 }
